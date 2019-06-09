@@ -37,7 +37,7 @@ class UsersController {
           userExist = user;
 
           if (userExist.length === 0) {
-            const channelModel = new ChannelModel.model({ channelName: 'default-channel' });
+            const channelModel = new ChannelModel.model({ channelName: 'home-room' });
             const saveUser = new UserModel.model({
               nickname: nickname,
               channel: channelModel
@@ -51,7 +51,7 @@ class UsersController {
               resolve(userExist);
             });
           } else {
-            reject('Nickname is already taken !');
+            reject('USER_ALREADY_LOGGED');
           }
         })
         .catch(error => {

@@ -13,6 +13,7 @@ class Sockets {
     let io = socketIo(server);
     // when connecting
     io.on('connection', socket => {
+      socket.join('home-room');
       //connect to database
       database.connection;
 
