@@ -19,7 +19,7 @@ import { useState, useEffect } from 'react';
 // };
 const API = `${process.env.REACT_APP_API_URL}/`;
 
-const usePostFetch = params => {
+export const usePostFetch = params => {
   const [data, setData] = useState([]);
 
   async function postData(params) {
@@ -42,6 +42,3 @@ const usePostFetch = params => {
   }, [params]);
   return data;
 };
-// };
-
-export default usePostFetch;

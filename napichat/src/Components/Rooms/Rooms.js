@@ -1,30 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import usePostFetch from '../Utils/Utils';
+import React, { useContext, useState, useEffect } from 'react';
+import { useChangeChannel } from '../../Services/UsersService';
+import SocketContext from '../../SocketContext/SocketContext';
+import { createChannel } from '../../Socket/emit';
 
 export default function Rooms(props) {
   const [showCreate, setShowCreate] = useState(false);
   const [channelName, setChannelName] = useState('');
-  const [query, setQuery] = useState();
-  const response = usePostFetch(query);
+  const [query, setUserChannel] = useState();
+  const self = useChangeChannel(query);
+  const users = useContext(SocketContext);
 
   const handleNewChannel = () => {
     setShowCreate(true);
   };
 
+  // change user channel when creating new one
   const handleCreateChannel = e => {
     e.preventDefault();
-    setQuery({ url: 'user/channel', body: { user: props.self, channel: channelName } });
+    console.log(props.self);
+    setUserChannel({ url: 'user/channel', body: { user: props.self, channel: channelName } });
   };
 
+  //
   const handleJoinChannel = () => {
     return null;
   };
 
   useEffect(() => {
-    if (response !== undefined && response !== null) {
-      console.log(response);
+    console.log(users);
+    if (self.user) {
+      console.log(self);
+      // emit event to server to create channel
+      createChannel(self.user);
     }
-  }, [response]);
+  }, [self, users]);
 
   return (
     <div>

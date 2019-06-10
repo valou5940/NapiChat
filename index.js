@@ -1,16 +1,15 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
 const path = require('path');
 const port = process.env.PORT || 5000;
 const bodyParser = require('body-parser');
 const UsersController = require('./controllers/UsersController');
 const ChannelsController = require('./controllers/ChannelsController');
 const MessagesController = require('./controllers/MessagesController');
-const sockets = require('./sockets/sockets');
+const socket = require('./sockets/sockets');
+
 //CORS middleware
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -55,10 +54,8 @@ app.get('/api/users', (req, res) => {
 
 // save user into db
 app.post('/api/user', (req, res) => {
-  console.log(req.body.nickname);
   UsersController.setNicknameOnLogin(req.body.nickname)
     .then(user => {
-      console.log('USER TO SEND TO CLIENT : ', user);
       res.json({ user: user });
     })
     .catch(error => {
@@ -117,4 +114,5 @@ server.listen(port, () => {
   console.log(`server listening to port ${port}`);
 });
 
-sockets.connectSocket(server);
+//sockets
+socket.connectToSocket(server);

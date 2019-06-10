@@ -64,8 +64,6 @@ class UsersController {
    * Change user channel when joining/creating new channel
    */
   changeUserChannel(user, channelName) {
-    console.log('CHANNEL NAME :', channelName);
-    console.log('user name', user.nickname);
     return new Promise((resolve, reject) => {
       const channelModel = new ChannelModel.model({ channelName: channelName });
       UserModel.model
