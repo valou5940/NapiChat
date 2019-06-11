@@ -1,4 +1,4 @@
-import { usePostFetch } from '../Utils/Fetch';
+import { usePostFetch, useGetFetch } from '../Utils/Fetch';
 
 // save user with nickname and returns logged user
 export const useLogin = query => {
@@ -10,4 +10,10 @@ export const useLogin = query => {
 export const useChangeChannel = query => {
   const user = usePostFetch(query);
   return user;
+};
+
+// get users list
+export const useGetUsersList = query => {
+  const usersList = useGetFetch(query);
+  return usersList;
 };

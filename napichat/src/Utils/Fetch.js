@@ -1,24 +1,33 @@
 import { useState, useEffect } from 'react';
 
-// const Utils = {
-// const useGetFetch = url => {
-//   const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     fetch(url, {
-//       method: 'get',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//       .then(response => response.json())
-//       .then(data => setData(data))
-//       .catch(error => console.log(error));
-//   }, [url]);
-//   return data;
-// };
+//API ENDPOINT
 const API = `${process.env.REACT_APP_API_URL}/`;
 
+//GET REQUEST
+export const useGetFetch = params => {
+  const [data, setData] = useState([]);
+
+  async function getData(params) {
+    const response = await fetch(API + params.url, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    setData(data);
+  }
+
+  useEffect(() => {
+    if (params !== undefined && params !== null) {
+      getData(params);
+    }
+  }, [params]);
+  return data;
+};
+
+// POST REQUEST
 export const usePostFetch = params => {
   const [data, setData] = useState([]);
 
@@ -36,7 +45,7 @@ export const usePostFetch = params => {
   }
 
   useEffect(() => {
-    if (params !== undefined) {
+    if (params !== undefined && params !== null) {
       postData(params);
     }
   }, [params]);

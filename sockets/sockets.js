@@ -44,18 +44,18 @@ const connectToSocket = server => {
     });
 
     socket.on('disconnect', id => {
-      // UsersController.deleteConnectedUser(id)
-      //   .then(user => {
-      //     const room = user.channel.channelName;
-      //     io.emit('user-left', user);
-      //     io.to(room).emit('user-disconnected', user);
-      //     getUsersInChannel(room).then(users => {
-      //       io.to(room).emit('users-list', users);
-      //     });
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
+      UsersController.deleteConnectedUser(id)
+        .then(user => {
+          const room = user.channel.channelName;
+          io.emit('user-left', user);
+          io.to(room).emit('user-disconnected', user);
+          getUsersInChannel(room).then(users => {
+            io.to(room).emit('users-list', users);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     });
   });
 };

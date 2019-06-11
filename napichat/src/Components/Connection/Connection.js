@@ -10,19 +10,17 @@ export default function Connection(props) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log(userLogin);
-    if (userLogin !== undefined && userLogin.user) {
-      if (userLogin === 'USER_ALREADY_LOGGED') {
-        setError('Nickname is already taken !');
-      } else {
-        setError(null);
-        setUser(userLogin.user);
-        props.onLogin(userLogin.user);
-        props.history.push('/rooms');
-        joinHomeRoom(userLogin.user);
-      }
+    // console.log(userLogin);
+    if (userLogin.user) {
+      setError(null);
+      setUser(userLogin.user);
+      props.onLogin(userLogin.user);
+      props.history.push('/rooms');
+      joinHomeRoom(userLogin.user);
+    } else if (userLogin === 'USER_ALREADY_LOGGED') {
+      setError('Nickname is already taken !');
     }
-  }, [props, user, userLogin]);
+  }, [userLogin, props]);
 
   const handleSubmit = event => {
     event.preventDefault();

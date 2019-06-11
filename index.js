@@ -76,7 +76,7 @@ app.post('/api/user/channel', (req, res) => {
     });
 });
 
-//get users in chan
+//get users in channel
 app.get('/api/users/:channel', (req, res) => {
   const room = req.params.channel;
   UsersController.getUsersInChannel(room)
